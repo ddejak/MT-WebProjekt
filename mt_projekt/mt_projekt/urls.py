@@ -24,5 +24,7 @@ urlpatterns = [
     path('', include('studenti.urls')),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Serve media files in development and production (for demo purposes)
+# In production, consider using a cloud storage service like Cloudinary
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
