@@ -1,0 +1,159 @@
+{% extends "studenti/base.html" %}
+{% load static %}
+
+{% block title %}{{ student.ime }} {{ student.prezime }}{% endblock %}
+
+{% block content %}
+
+<div style="padding: 40px 20px; background: #f5f7fa;">
+    <div style="max-width: 900px; margin: 0 auto;">
+        
+        <!-- Korak natrag -->
+        <a href="{% url 'studenti:index' %}" style="color: #2c5282; text-decoration: none; font-weight: bold; margin-bottom: 30px; display: inline-block;">
+            ← Natrag na početnu
+        </a>
+        
+        <!-- Glavni sadržaj -->
+        <div style="background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 40px; margin-bottom: 40px;">
+            
+            <!-- Zaglavlje s imenom -->
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h1 style="color: #2c5282; margin-bottom: 10px;">{{ student.ime }} {{ student.prezime }}</h1>
+                <p style="color: #666; font-size: 16px;">{{ student.kratko_o }}</p>
+            </div>
+            
+            <!-- Slika -->
+            <div style="text-align: center; margin-bottom: 40px;">
+                <img src="{{ student.slika.url }}" alt="{{ student.ime }}" style="max-width: 300px; width: 100%; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+            </div>
+            
+            <!-- Multimedija (Zvuk i Video) -->
+            {% if student.zvuk or student.video %}
+            <div style="background: #f0f4f8; padding: 20px; border-radius: 8px; margin-bottom: 40px;">
+                <h3 style="color: #2c5282; margin-top: 0;">📻 Multimedija</h3>
+                
+                {% if student.zvuk %}
+                <div style="margin-bottom: 20px;">
+                    <p style="color: #666; font-weight: bold;">🎵 Audio:</p>
+                    <audio controls style="width: 100%; max-width: 400px;">
+                        <source src="{{ student.zvuk.url }}" type="audio/mpeg">
+                        Tvoj pretraživač ne podržava audio element.
+                    </audio>
+                </div>
+                {% endif %}
+                
+                {% if student.video %}
+                <div>
+                    <p style="color: #666; font-weight: bold;">🎬 Video:</p>
+                    {% if 'youtube.com' in student.video or 'youtu.be' in student.video %}
+                        <div style="position: relative; width: 100%; max-width: 600px; padding-bottom: 56.25%;">
+                            <iframe 
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;"
+                                src="{{ student.video }}" 
+                                title="Student video"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    {% else %}
+                        <a href="{{ student.video }}" target="_blank" style="color: #2c5282; font-weight: bold; text-decoration: none;">
+                            Pogledaj video →
+                        </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <!-- Biografija -->
+            <div style="margin-bottom: 40px;">
+                <h2 style="color: #2c5282; border-bottom: 2px solid #2c5282; padding-bottom: 10px;">📖 Biografija</h2>
+                <p style="color: #333; line-height: 1.8; margin-top: 20px;">{{ student.biografija }}</p>
+            </div>
+            
+            <!-- Opće informacije -->
+            <div style="margin-bottom: 40px;">
+                <h2 style="color: #2c5282; border-bottom: 2px solid #2c5282; padding-bottom: 10px;">ℹ️ Opće informacije</h2>
+                <ul style="list-style: none; padding: 20px 0; margin: 0;">
+                    <li style="padding: 8px 0; color: #333;">📅 <strong>Datum rođenja:</strong> {{ student.datum_rodenja|date:"d. m. Y" }}</li>
+                    <li style="padding: 8px 0; color: #333;">🏠 <strong>Mjesto rođenja:</strong> {{ student.mjesto_rodenja }}</li>
+                    <li style="padding: 8px 0; color: #333;">📍 <strong>Mjesto stanovanja:</strong> {{ student.mjesto_stanovanja }}</li>
+                    <li style="padding: 8px 0; color: #333;">👤 <strong>Spol:</strong> {{ student.get_spol_display }}</li>
+                    <li style="padding: 8px 0; color: #333;">🎯 <strong>Hobi:</strong> {{ student.hobi }}</li>
+                </ul>
+            </div>
+            
+            <!-- Obrazovanje -->
+            <div style="margin-bottom: 40px;">
+                <h2 style="color: #2c5282; border-bottom: 2px solid #2c5282; padding-bottom: 10px;">🎓 Obrazovanje</h2>
+                <ul style="list-style: none; padding: 20px 0; margin: 0;">
+                    {% for stavka in student.obrazovanje|linebreaks %}
+                        {% if stavka|striptags %}
+                            <li style="padding: 8px 0; color: #333;">• {{ stavka|striptags }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <!-- Računalne vještine -->
+            <div style="margin-bottom: 40px;">
+                <h2 style="color: #2c5282; border-bottom: 2px solid #2c5282; padding-bottom: 10px;">💻 Računalne vještine</h2>
+                <ul style="list-style: none; padding: 20px 0; margin: 0;">
+                    {% for stavka in student.vještine|linebreaks %}
+                        {% if stavka|striptags %}
+                            <li style="padding: 8px 0; color: #333;">• {{ stavka|striptags }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <!-- Ostale vještine -->
+            <div style="margin-bottom: 40px;">
+                <h2 style="color: #2c5282; border-bottom: 2px solid #2c5282; padding-bottom: 10px;">⭐ Ostale vještine</h2>
+                <ul style="list-style: none; padding: 20px 0; margin: 0;">
+                    {% for stavka in student.vještine_ostale|linebreaks %}
+                        {% if stavka|striptags %}
+                            <li style="padding: 8px 0; color: #333;">• {{ stavka|striptags }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <!-- Linkovi -->
+            <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin-bottom: 40px;">
+                <h2 style="color: #2c5282; margin-top: 0;">🔗 Dodatni linkovi</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                    
+                    {% if student.link_kolega %}
+                    <a href="{{ student.link_kolega }}" target="_blank" style="display: block; background: white; padding: 15px; border-radius: 5px; text-decoration: none; color: #2c5282; font-weight: bold; border: 2px solid #2c5282; text-align: center; transition: all 0.3s;" onmouseover="this.style.background='#2c5282'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#2c5282'">
+                        👥 Vidi drugog studenta
+                    </a>
+                    {% endif %}
+                    
+                    {% if student.ostali_link %}
+                    <a href="{{ student.ostali_link }}" target="_blank" style="display: block; background: white; padding: 15px; border-radius: 5px; text-decoration: none; color: #2c5282; font-weight: bold; border: 2px solid #2c5282; text-align: center; transition: all 0.3s;" onmouseover="this.style.background='#2c5282'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#2c5282'">
+                        🌐 Vanjska web stranica
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        
+        <!-- Navigacija između studenata -->
+        {% if ostali_studenti %}
+        <div style="text-align: center; margin-top: 40px;">
+            <h3 style="color: #333; margin-bottom: 20px;">Drugi studenti:</h3>
+            {% for drugi_student in ostali_studenti %}
+                <a href="{% url 'studenti:detail' drugi_student.id %}" style="display: inline-block; background: #2c5282; color: white; padding: 12px 25px; border-radius: 5px; text-decoration: none; margin: 5px; font-weight: bold; transition: background 0.3s;" onmouseover="this.style.background='#1e3a5f'" onmouseout="this.style.background='#2c5282'">
+                    {{ drugi_student.ime }} {{ drugi_student.prezime }}
+                </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+    </div>
+</div>
+
+{% endblock %}

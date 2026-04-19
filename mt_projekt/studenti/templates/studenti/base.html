@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Predstavljanje potencijalnom poslodavcu{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<header>
+    <h1>{% block header_title %}Predstavljanje potencijalnom poslodavcu{% endblock %}</h1>
+    <p>{% block header_subtitle %}Osobna web stranica studenata{% endblock %}</p>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <p>
+        Web stranica izrađena za vrijeme pohađanja 
+        <a href="https://www.ferit.unios.hr/" target="_blank">
+            Fakulteta elektrotehnike, računarstva i informacijskih tehnologija u Osijeku
+        </a>
+        u sklopu kolegija 
+        <a href="https://moodle.srce.hr/" target="_blank">
+            Multimedijska tehnika
+        </a>
+    </p>
+</footer>
+
+</body>
+</html>
