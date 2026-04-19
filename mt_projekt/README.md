@@ -20,6 +20,7 @@ Konfiguracija u `settings.py`:
 
 ### 1. Pripremite repozitorijum
 - Osigurajte da su svi fajlovi u repozitorijumu
+- Kopirajte `requirements.txt` iz `mt_projekt/` u root repozitorijuma (ili koristite Root Directory opciju)
 - Kopirajte `.env.example` u `.env` za lokalno testiranje
 
 ### 2. Kreirajte Render Web Service
@@ -41,6 +42,7 @@ Konfiguracija u `settings.py`:
 
 #### Advanced
 - **Python Version**: 3.11
+- **Root Directory**: `mt_projekt` (ako je vaš Django projekat u subfolderu)
 - **Instance Type**: Free
 
 ### 3. Dodatni koraci
