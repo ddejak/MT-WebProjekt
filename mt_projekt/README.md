@@ -36,8 +36,10 @@ Konfiguracija u `settings.py`:
 - Dodajte sledeće environment varijable:
   - `SECRET_KEY`: Generišite novi tajni ključ
   - `DEBUG`: `False`
-  - `ALLOWED_HOSTS`: Vaš Render app URL
+  - `ALLOWED_HOSTS`: `mt-webprojekt.onrender.com`
   - `DATABASE_URL`: Render će automatski dodati za PostgreSQL bazu
+
+> Ako je aplikacija drugačijeg naziva, unesite svoj Render URL ovdje.
 
 #### Advanced
 - **Python Version**: 3.11
