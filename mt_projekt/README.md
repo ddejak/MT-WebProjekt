@@ -1,113 +1,60 @@
-# Predstavljanje Poslodavcu - Django Web Stranica
+# MT Projekt - Deployment na Render.com
 
-Web stranica za predstavljanje studenata potencijalnim послodavcima, urađena kao projekt za kolegij Multimedijska Tehnika na FERIT-u.
+Ovaj projekat je Django aplikacija za upravljanje studentima. Slijedite korake ispod da biste deployovali aplikaciju na Render.com.
 
-## Instalacija (Lokalno)
+## Koraci za deployment
 
-```bash
-# Klonira projekt
-git clone [tvoj-repository-url]
-cd mt_projekt
+### 1. Pripremite repozitorijum
+- Osigurajte da su svi esencijalni fajlovi u repozitorijumu (manage.py, requirements.txt, mt_projekt/, studenti/, static/, media/)
+- Dodajte `.env` fajl sa sledećim varijablama (kopirajte iz .env.example ako postoji):
+  ```
+  SECRET_KEY=your-secret-key-here
+  DEBUG=False
+  ALLOWED_HOSTS=your-render-app-name.onrender.com
+  ```
 
-# Kreira virtualno okruženje
-python -m venv venv
+### 2. Kreirajte Render Web Service
+- Idite na [Render.com](https://render.com) i prijavite se
+- Kliknite "New" > "Web Service"
+- Povežite vaš GitHub repozitorijum
+- Konfigurišite sledeće:
 
-# Aktivira virtualno okruženje
-# Windows:
-venv\Scripts\activate
-# MacOS/Linux:
-source venv/bin/activate
+#### Build Settings
+- **Build Command**: `pip install -r requirements.txt`
+- **Start Command**: `gunicorn mt_projekt.wsgi:application --bind 0.0.0.0:$PORT`
 
-# Instalira zavisnosti
+#### Environment
+- Dodajte sledeće environment varijable:
+  - `SECRET_KEY`: Generišite novi tajni ključ (možete koristiti `python -c "import secrets; print(secrets.token_urlsafe(50))"`)
+  - `DEBUG`: `False`
+  - `ALLOWED_HOSTS`: Vaš Render app URL (npr. `your-app-name.onrender.com`)
+  - `DATABASE_URL`: Ako koristite PostgreSQL (Render pruža besplatnu bazu), inače ostavite prazno za SQLite
+
+#### Advanced
+- **Python Version**: 3.11 (ili verzija iz runtime.txt)
+- **Instance Type**: Free (za testiranje)
+
+### 3. Migracije baze podataka
+- Nakon prvog deploya, pokrenite migracije u Render shell-u:
+  ```
+  python manage.py migrate
+  python manage.py collectstatic --noinput
+  ```
+
+### 4. Dodatni koraci
+- Ako koristite media fajlove, možda ćete trebati konfigurisati Cloudinary ili sličan servis za produkciju
+- Za produkciju, prebacite na PostgreSQL bazu podataka
+
+## Lokalno testiranje
+Da testirate lokalno:
+```
 pip install -r requirements.txt
-
-# Migracije
 python manage.py migrate
-
-# Pokrenula razvojni server
 python manage.py runserver
 ```
 
-Otisni `http://localhost:8000` u pretraživaču.
-
-## Deployment
-
-### Render.com (Preporučeno)
-
-1. Kreiraj račun na [render.com](https://render.com)
-2. Spoji sa GitHub repozitorijem
-3. Kreiraj novi "Web Service"
-4. **Build Command:**
-   ```
-   pip install -r requirements.txt && python manage.py migrate
-   ```
-5. **Start Command:**
-   ```
-   gunicorn mt_projekt.wsgi:application
-   ```
-6. **Environment Variables:**
-   - `DEBUG`: `False`
-   - `ALLOWED_HOSTS`: `tvoj-build.onrender.com`
-   - `SECRET_KEY`: Generiraj novu (kopiraj iz settings.py ili generiraj novu)
-
-### PythonAnywhere
-
-1. Upload-aj projekt
-2. Kreiraj virtualnu sredinu
-3. Konfiguriraj WSGI datoteku s Django postavkama
-4. Otvori web aplikaciju
-
-### Railway.app
-
-1. Spoji GitHub
-2. Deploy s automatskim setup-om
-3. Dodaj BUILD_COMMAND uSettings
-
-## Admin Panel
-
-Dostupan na: `/admin`
-- **Username**: `admin`
-- **Password**: Postavi u razvojnom okruženju
-
-## Struktura Projekta
-
-```
-mt_projekt/
-├── mt_projekt/           # Glavne Django postavke
-│   ├── settings.py       # Konfiguracija
-│   ├── urls.py           # URL routing
-│   └── wsgi.py
-├── studenti/             # App za studente
-│   ├── models.py         # Student model
-│   ├── views.py          # Prikazi
-│   ├── urls.py           # Rute
-│   ├── templates/        # HTML template-i
-│   └── migrations/       # Baze podataka
-├── static/               # CSS, JS, slike
-├── media/                # Učitane slike studenata
-├── manage.py
-├── requirements.txt
-└── Procfile
-```
-
-## Osobine
-
-- ✅ Kartica studenata na početnoj stranici
-- ✅ Detaljna stranica za svakog studenta
-- ✅ Linkovi na druge studente
-- ✅ Vanjski linkovi
-- ✅ Audio i video podrška
-- ✅ Galerija slika
-- ✅ Responsive dizajn
-- ✅ Admin panel za upravljanje
-
-## Zahtjevi
-
-- Python 3.10+
-- Django 6.0+
-- Pillow (za obrada slika)
-- Gunicorn (za deployment)
-
-## Licence
-
-Projekat za edukacijske svrhe na Fakultetu elektrotehnike, računarstva i informacijskih tehnologija u Osijeku.
+## Napomene
+- Render besplatni plan ima ograničenja (750 sati/mjesec)
+- SQLite baza se neće perzistirati između deploya na besplatnom planu
+- Za produkciju, koristite PostgreSQL</content>
+<parameter name="filePath">c:\Users\domin\OneDrive\Desktop\Git Repo\MT-WebProjekt\mt_projekt\README.md
