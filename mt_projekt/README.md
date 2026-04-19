@@ -50,11 +50,14 @@ Konfiguracija u `settings.py`:
 
 ## Lokalno testiranje
 ```
-pip install -r requirements.txt
+cd mt_projekt
+python -m pip install -r requirements.txt
 python manage.py migrate
-python manage.py collectstatic
+python manage.py collectstatic --noinput
 python manage.py runserver
 ```
+
+> Ako koristite Python 3.14, verzija `psycopg2-binary==2.9.11` radi lokalno.
 
 ## Napomene
 - Render besplatni plan ima ograničenja
