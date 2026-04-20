@@ -10,8 +10,24 @@
 <body>
 
 <header>
-    <h1>{% block header_title %}Predstavljanje potencijalnom poslodavcu{% endblock %}</h1>
-    <p>{% block header_subtitle %}Osobna web stranica studenata{% endblock %}</p>
+    <!-- Video Background -->
+    <video 
+        class="header-video"
+        autoplay 
+        muted 
+        loop 
+        playsinline>
+        <source src="/media/header-background.mp4" type="video/mp4">
+    </video>
+    
+    <!-- Overlay -->
+    <div class="header-overlay"></div>
+    
+    <!-- Content -->
+    <div class="header-content">
+        <h1>{% block header_title %}Predstavljanje potencijalnom poslodavcu{% endblock %}</h1>
+        <p>{% block header_subtitle %}Osobna web stranica studenata{% endblock %}</p>
+    </div>
 </header>
 
 <main>
