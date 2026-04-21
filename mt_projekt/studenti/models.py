@@ -29,6 +29,22 @@ class Student(models.Model):
     link_kolega = models.URLField(blank=True, null=True, help_text="Link na drugog studenta")
     ostali_link = models.URLField(blank=True, null=True, help_text="Link na vanjsku web stranicu")
     
+    
+    @property
+    def youtube_embed_url(self):
+        import re
+        if not self.video:
+            return None
+        # youtu.be/ID
+        match = re.search(r'youtu\.be/([^?&]+)', self.video)
+        if match:
+            return f"https://www.youtube.com/embed/{match.group(1)}"
+        # youtube.com/watch?v=ID
+        match = re.search(r'v=([^?&]+)', self.video)
+        if match:
+            return f"https://www.youtube.com/embed/{match.group(1)}"
+        return self.video
+    
     def __str__(self):
         return f"{self.ime} {self.prezime}"
     

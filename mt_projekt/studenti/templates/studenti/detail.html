@@ -45,15 +45,17 @@
                 {% if student.video %}
                 <div>
                     <p style="color: #666; font-weight: bold;">🎬 Video:</p>
-                    {% if 'youtube.com' in student.video or 'youtu.be' in student.video %}
+                    {% if embed_url %}
                         <div style="position: relative; width: 100%; max-width: 600px; padding-bottom: 56.25%;">
                             <iframe 
                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;"
-                                src="{{ student.video }}" 
+                                src="{{ embed_url }}"
                                 title="Student video"
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
+                                allowfullscreen
+                                referrerPolicy="strict-origin-when-cross-origin"
+                                >
                             </iframe>
                         </div>
                     {% else %}
@@ -88,9 +90,9 @@
             <div style="margin-bottom: 40px;">
                 <h2 style="color: #2c5282; border-bottom: 2px solid #2c5282; padding-bottom: 10px;">🎓 Obrazovanje</h2>
                 <ul style="list-style: none; padding: 20px 0; margin: 0;">
-                    {% for stavka in student.obrazovanje|linebreaks %}
-                        {% if stavka|striptags %}
-                            <li style="padding: 8px 0; color: #333;">• {{ stavka|striptags }}</li>
+                    {% for stavka in student.obrazovanje.splitlines %}
+                        {% if stavka.strip %}
+                            <li style="padding: 8px 0; color: #333;">• {{ stavka }}</li>
                         {% endif %}
                     {% endfor %}
                 </ul>
@@ -100,9 +102,9 @@
             <div style="margin-bottom: 40px;">
                 <h2 style="color: #2c5282; border-bottom: 2px solid #2c5282; padding-bottom: 10px;">💻 Računalne vještine</h2>
                 <ul style="list-style: none; padding: 20px 0; margin: 0;">
-                    {% for stavka in student.vještine|linebreaks %}
-                        {% if stavka|striptags %}
-                            <li style="padding: 8px 0; color: #333;">• {{ stavka|striptags }}</li>
+                    {% for stavka in student.vještine.splitlines %}
+                        {% if stavka.strip%}
+                            <li style="padding: 8px 0; color: #333;">• {{ stavka }}</li>
                         {% endif %}
                     {% endfor %}
                 </ul>
@@ -112,9 +114,9 @@
             <div style="margin-bottom: 40px;">
                 <h2 style="color: #2c5282; border-bottom: 2px solid #2c5282; padding-bottom: 10px;">⭐ Ostale vještine</h2>
                 <ul style="list-style: none; padding: 20px 0; margin: 0;">
-                    {% for stavka in student.vještine_ostale|linebreaks %}
-                        {% if stavka|striptags %}
-                            <li style="padding: 8px 0; color: #333;">• {{ stavka|striptags }}</li>
+                    {% for stavka in student.vještine_ostale.splitlines %}
+                        {% if stavka.strip %}
+                            <li style="padding: 8px 0; color: #333;">• {{ stavka }}</li>
                         {% endif %}
                     {% endfor %}
                 </ul>
