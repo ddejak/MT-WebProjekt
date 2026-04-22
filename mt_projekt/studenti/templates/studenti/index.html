@@ -49,9 +49,12 @@
         <h2 style="text-align: center; margin: 60px 0 40px 0; font-size: 28px; color: #333;">Galerija</h2>
         <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;">
             {% for slika in slike %}
-                <a href="{% static slika %}" target="_blank" style="text-decoration: none;">
-                    <img src="{% static slika %}" alt="Galerija" style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                </a>
+                <img src="{% static slika %}" onclick="document.getElementById('lb-{{ forloop.counter }}').showModal()"
+                    style="width:200px; height:200px; object-fit:cover; border-radius:8px; cursor:pointer;">
+                
+                <dialog id="lb-{{ forloop.counter }}" onclick="this.close()" style="background:rgba(0,0,0,0.85); border:none; border-radius:10px; padding:10px; max-width:90vw;">
+                    <img src="{% static slika %}" style="max-width:85vw; max-height:85vh; display:block; border-radius:8px;">
+                </dialog>
             {% endfor %}
         </div>
         

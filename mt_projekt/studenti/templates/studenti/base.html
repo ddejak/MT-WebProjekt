@@ -9,6 +9,37 @@
 </head>
 <body>
 
+    
+<nav>
+    
+
+    <div class="nav-links">
+    <a href="{% url 'studenti:index' %}">Home</a>
+
+    <div class="dropdown">
+        <span>Studenti ▾</span>
+        <div class="dropdown-menu">
+            {% for student in studenti %}
+                <a href="{% url 'studenti:detail' student.id %}">{{ student.ime }} {{ student.prezime }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <span>Kolege ▾</span>
+        <div class="dropdown-menu">
+            <a href="https://kolegaaa.com" target="_blank">Ime Prezime</a>
+            <a href="https://kolegabbb.com" target="_blank">Ime Prezime</a>
+            <a href="https://kolegaccc.com" target="_blank">Ime Prezime</a>
+        </div>
+    </div>
+</div>
+
+    <a href="https://www.ferit.unios.hr/" target="_blank">
+        <img src="{% static 'images/ferit-logo.png' %}" alt="FERIT logo" class="nav-logo">
+    </a>
+</nav>
+
 <header>
     <!-- Video Background -->
     <video 
