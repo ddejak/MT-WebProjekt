@@ -24,8 +24,12 @@
             
             <!-- Slika -->
             <div style="text-align: center; margin-bottom: 40px;">
-                <img src="{{ student.slika.url }}" alt="{{ student.ime }}" style="max-width: 300px; width: 100%; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                <img src="{{ student.slika.url }}" 
+                    alt="{{ student.ime }}" 
+                    style="max-width: 300px; width: 100%; border-radius: 10px; cursor: pointer;"
+                    onclick="window.open('{{ student.slika.url }}', '_blank')">
             </div>
+
             
             <!-- Multimedija (Zvuk i Video) -->
             {% if student.zvuk or student.video %}
