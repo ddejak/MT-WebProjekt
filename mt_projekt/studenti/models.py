@@ -19,7 +19,7 @@ class Student(models.Model):
     hobi = models.CharField(max_length=200)
     
     # Obrazovanje
-    obrazovanje = models.TextField(help_text="Odvojeno novim linijama")
+    obrazovanje = models.TextField(blank=True, null=True, help_text="Dodatne napomene o obrazovanju (opcionalno)")
     
     # Vještine
     vještine = models.TextField(help_text="Odvojeno novim linijama")
@@ -28,6 +28,13 @@ class Student(models.Model):
     # Linkovi
     link_kolega = models.URLField(blank=True, null=True, help_text="Link na drugog studenta")
     ostali_link = models.URLField(blank=True, null=True, help_text="Link na vanjsku web stranicu")
+    link_mjesto_rodenja = models.URLField(blank=True, null=True, help_text="Link na Wikipedia ili web stranicu mjesta rođenja")
+    naziv_osnovne_skole = models.CharField(max_length=300, blank=True, null=True, help_text="Naziv osnovne škole (prikazuje se kao link)")
+    link_osnovna_skola = models.URLField(blank=True, null=True, help_text="Link na web stranicu osnovne škole")
+    naziv_skole = models.CharField(max_length=300, blank=True, null=True, help_text="Naziv srednje škole (prikazuje se kao link)")
+    link_skola = models.URLField(blank=True, null=True, help_text="Link na web stranicu srednje škole")
+    naziv_fakulteta = models.CharField(max_length=300, blank=True, null=True, help_text="Naziv fakulteta (prikazuje se kao link)")
+    link_fakultet = models.URLField(blank=True, null=True, help_text="Link na web stranicu fakulteta")
     
     
     @property

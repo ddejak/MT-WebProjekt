@@ -5,17 +5,34 @@ def index(request):
     """Početna stranica - kratko o svim studentima"""
     studenti = Student.objects.all()
     
-    # Pripremi listu slika iz static/images
-    slike = [
-        'images/bmp.bmp',
-        'images/gif.gif',
-        'images/jpg.jpg',
-        'images/png.png',
+    # FERIT galerija (format demo)
+    slike_ferit = [
+        ('images/bmp.bmp', 'BMP'),
+        ('images/gif.gif', 'GIF'),
+        ('images/jpg.jpg', 'JPG'),
+        ('images/png.png', 'PNG'),
     ]
-    
+
+    # Galerija prirode razvrstana po formatima
+    slike_priroda = [
+        ('images/priroda/p1.jpg',  'JPG'),
+        ('images/priroda/p2.jpg',  'JPG'),
+        ('images/priroda/p3.jpg',  'JPG'),
+        ('images/priroda/p4.png',  'PNG'),
+        ('images/priroda/p5.png',  'PNG'),
+        ('images/priroda/p6.png',  'PNG'),
+        ('images/priroda/p7.gif',  'GIF'),
+        ('images/priroda/p8.gif',  'GIF'),
+        ('images/priroda/p12.gif', 'GIF'),
+        ('images/priroda/p9.bmp',  'BMP'),
+        ('images/priroda/p10.webp','WEBP'),
+        ('images/priroda/p11.webp','WEBP'),
+    ]
+
     context = {
         'studenti': studenti,
-        'slike': slike,
+        'slike_ferit': slike_ferit,
+        'slike_priroda': slike_priroda,
     }
     
     return render(request, 'studenti/index.html', context)
